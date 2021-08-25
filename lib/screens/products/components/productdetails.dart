@@ -60,169 +60,188 @@ class _ProductDetailsState extends State<ProductDetails> {
           ],
         ),
         children: [
-          Row(
-            children: [
-              Column(
-                children: [
-                  Row(
-                    children: [Text("Product ID"), Text(model.id.toString())],
-                  ),
-                  Row(
-                    children: [Text("Posted On"), Text(model.productName)],
-                  )
-                ],
-              ),
-              ElevatedButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: colormain,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: defaultPadding * 1.5,
-                    vertical:
-                        defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
-                  ),
+          if (Responsive.isDesktop(context))
+            Container(
+                decoration: BoxDecoration(
+                  color: secondaryColor.withOpacity(0.2),
                 ),
-                onPressed: () {},
-                child: Text(
-                  "Action",
-                  style: TextStyle(color: secondaryColor),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-          Row(
-            children: [
-              Column(
-                children: [
-                  Text(""),
-                  CarouselSlider(
-                    options: CarouselOptions(
-                      height: 400.0,
-                      autoPlay: false,
-                    ),
-                    items: imgList
-                        .map(
-                          (item) => Center(
-                            child: Image.network(
-                              item,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                  Row(
-                    children: [
-                      Text("OpenTo"),
-                      Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 15,
-                          itemBuilder: (BuildContext context, int index) =>
-                              Card(
-                            child: Center(child: Text('Dummy Card Text')),
-                          ),
-                        ),
-                      ),
-                      Text("Tags"),
-                      Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 15,
-                          itemBuilder: (BuildContext context, int index) =>
-                              Card(
-                            child: Center(child: Text('Tags')),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: secondaryColor,
-                      ),
-                      Text("User Name"),
-                      Icon(Icons.person)
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text('Karachi,Sindh'),
-                      TextButton.icon(
-                        style: TextButton.styleFrom(
-                          backgroundColor: bgColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)),
-                        ),
-                        label: Text(
-                          '4.9',
-                          style: TextStyle(color: colorChartDownloadMain),
-                        ),
-                        icon: Icon(
-                          Icons.star,
-                          color: colorChartDownloadMain,
-                        ),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
+                height: 800,
+                width: 800,
+                //main row
+                child: Row(children: [
+                  //1 DIV
                   Container(
-                    child: Card(
-                      color: Color(0xFFF5F6FA),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              children: [
-                                Text('95%',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold)),
-                                Text('Positive Rating',
-                                    style: TextStyle(fontSize: 10))
-                              ],
-                            ),
-                            Text('|'),
-                            Column(
-                              children: [
-                                Text('43',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold)),
-                                Text('Number Of Exchange',
-                                    style: TextStyle(fontSize: 10))
-                              ],
-                            )
-                          ],
+                    child: Row(               
+                      children: [
+                        Expanded(
+                          child: Column(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text("Product ID:"),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(model.id.toString())
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Text("Posted On:"),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(model.toString())
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                      ),
+                        TextButton(child:Text("Action") ,onPressed: (){},)
+
+                      ],
                     ),
                   ),
-                ],
-              )
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Column(
-            children: [
-              Text('Description'), 
-            Text(model.productdescription)
-            ],
-          )
+                ]))
         ]);
   }
 }
+
+
+          // Row(
+          //   children: [
+          //     Column(
+          //       children: [
+          //         Text("Slider"),
+          //         // CarouselSlider(
+          //         //   options: CarouselOptions(
+          //         //     height: 400.0,
+          //         //     autoPlay: false,
+          //         //   ),
+          //         //   items: imgList
+          //         //       .map(
+          //         //         (item) => Center(
+          //         //           child: Image.network(
+          //         //             item,
+          //         //             fit: BoxFit.cover,
+          //         //           ),
+          //         //         ),
+          //         //       )
+          //         //       .toList(),
+          //         // ),
+          //         Row(
+          //           children: [
+          //             Text("OpenTo"),
+          //             Expanded(
+          //               child: ListView.builder(
+          //                 shrinkWrap: true,
+          //                 scrollDirection: Axis.horizontal,
+          //                 itemCount: 3,
+          //                 itemBuilder: (BuildContext context, int index) =>
+          //                     Card(
+          //                   child: Center(child: Text('Dummy Card Text')),
+          //                 ),
+          //               ),
+          //             ),
+          //             Text("Tags"),
+          //             Expanded(
+          //               child: ListView.builder(
+          //                 shrinkWrap: true,
+          //                 scrollDirection: Axis.horizontal,
+          //                 itemCount: 3,
+          //                 itemBuilder: (BuildContext context, int index) =>
+          //                     Card(
+          //                   child: Center(child: Text('Tags')),
+          //                 ),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //     Column(
+          //       children: [
+          //         Row(
+          //           children: [
+          //             CircleAvatar(
+          //               backgroundColor: secondaryColor,
+          //             ),
+          //             Text("User Name"),
+          //             Icon(Icons.person)
+          //           ],
+          //         ),
+          //         Row(
+          //           children: [
+          //             Text('Karachi,Sindh'),
+          //             TextButton.icon(
+          //               style: TextButton.styleFrom(
+          //                 backgroundColor: bgColor,
+          //                 shape: RoundedRectangleBorder(
+          //                     borderRadius: BorderRadius.circular(5)),
+          //               ),
+          //               label: Text(
+          //                 '4.9',
+          //                 style: TextStyle(color: colorChartDownloadMain),
+          //               ),
+          //               icon: Icon(
+          //                 Icons.star,
+          //                 color: colorChartDownloadMain,
+          //               ),
+          //               onPressed: () {},
+          //             ),
+          //           ],
+          //         ),
+          //         Container(
+          //           child: Card(
+          //             color: Color(0xFFF5F6FA),
+          //             shape: RoundedRectangleBorder(
+          //               borderRadius: BorderRadius.circular(5.0),
+          //             ),
+          //             child: Padding(
+          //               padding: const EdgeInsets.all(15.0),
+          //               child: Row(
+          //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //                 children: [
+          //                   Column(
+          //                     children: [
+          //                       Text('95%',
+          //                           style: TextStyle(
+          //                               color: Colors.black,
+          //                               fontWeight: FontWeight.bold)),
+          //                       Text('Positive Rating',
+          //                           style: TextStyle(fontSize: 10))
+          //                     ],
+          //                   ),
+          //                   Text('|'),
+          //                   Column(
+          //                     children: [
+          //                       Text('43',
+          //                           style: TextStyle(
+          //                               color: Colors.black,
+          //                               fontWeight: FontWeight.bold)),
+          //                       Text('Number Of Exchange',
+          //                           style: TextStyle(fontSize: 10))
+          //                     ],
+          //                   )
+          //                 ],
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     )
+          //   ],
+          // ),
+          // SizedBox(
+          //   height: 20,
+          // ),
+          // Column(
+          //   children: [
+          //     Text('Description'), 
+          //   Text(model.productdescription)
+          //   ],
+          // )

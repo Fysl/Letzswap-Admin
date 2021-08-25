@@ -96,7 +96,7 @@ class _UserScreenState extends State<UserScreen> {
                 width: 20,
               ),
               SizedBox(
-                 width: 200,
+                width: 200,
                 height: 50,
                 child: ElevatedButton(
                   style: TextButton.styleFrom(
@@ -128,7 +128,7 @@ class _UserScreenState extends State<UserScreen> {
                 width: 20,
               ),
               SizedBox(
-                  width: 200,
+                width: 200,
                 height: 50,
                 child: ElevatedButton(
                   style: TextButton.styleFrom(
@@ -156,9 +156,7 @@ class _UserScreenState extends State<UserScreen> {
                   ),
                 ),
               ),
-              SizedBox(
-                width: 350
-              ),
+              SizedBox(width: 350),
               SizedBox(
                 width: 200,
                 height: 50,
@@ -173,7 +171,7 @@ class _UserScreenState extends State<UserScreen> {
                   ),
                   onPressed: () {},
                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "Blocked Users",
@@ -419,8 +417,9 @@ class _UserScreenState extends State<UserScreen> {
                               DataCell(Row(
                                 children: [
                                   TextButton.icon(
-                                    icon: Icon(Icons.more_vert,
-                                    color: secondaryColor,
+                                    icon: Icon(
+                                      Icons.more_vert,
+                                      color: secondaryColor,
                                     ),
                                     label: Text(''),
                                     onPressed: () {
@@ -437,7 +436,11 @@ class _UserScreenState extends State<UserScreen> {
                                               onPressed: () {
                                                 UserController()
                                                     .userrequestStatus(
-                                                        e.id, false, newtoken!);
+                                                        e.id, false, newtoken!).whenComplete(() => 
+                                                        setState(() {
+                                                  
+                                                })
+                                                        );
                                               },
                                             ),
                                           ),
@@ -458,14 +461,13 @@ class _UserScreenState extends State<UserScreen> {
                                                   image: e.image,
                                                   cityId: e.city,
                                                   dateofBirth: e.dateofBirth);
-                                                    showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return ProfileUpdate(
-                                          vModel: vmModel,
-                                           token: newtoken!
-                                        );
-                                      });
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (_) {
+                                                    return ProfileUpdate(
+                                                        vModel: vmModel,
+                                                        token: newtoken!);
+                                                  });
                                               // Navigator.push(
                                               //   context,
                                               //   MaterialPageRoute(

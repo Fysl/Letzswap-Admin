@@ -26,13 +26,12 @@ class _ProductScreenDashboardState extends State<ProductScreenDashboard> {
   List<dynamic>? productImages = [];
   Future? _bookmarkfuture;
   int? bookmarkcount;
- 
 
   @override
   void initState() {
     // setState(() {
-      gettoken();
-    
+    gettoken();
+
     // });
 
     super.initState();
@@ -43,49 +42,38 @@ class _ProductScreenDashboardState extends State<ProductScreenDashboard> {
     String? newtoken = sharedPreferences.getString("token");
     setState(() {
       token = SigninModel.fromJsonModel(jsonDecode(newtoken!));
-        // _bookmarkfuture=ProductController().getproductbookmarks(token!.result.accessToken).then((value) => 
-        // bookmarkcount=value.result.length
-        // );
+      // _bookmarkfuture=ProductController().getproductbookmarks(token!.result.accessToken).then((value) =>
+      // bookmarkcount=value.result.length
+      // );
       //  resulttoken=token!.result.accessToken;
     });
   }
 
-  
   Future<AllProducts> getAllproducts() async {
+    var newUrl = Uri.http(BASEURL.baseurl, "/api/product/ProductList");
 
- 
-var newUrl=Uri.http(BASEURL.baseurl,"/api/product/ProductList");
- 
-     final response = await get(
-        newUrl, headers: {
+    final response = await get(newUrl, headers: {
       //  HttpHeaders.authorizationHeader: 'Bearer $token',
-        'Authorization': 'Bearer ${token!.result.accessToken}',
-       
+      'Authorization': 'Bearer ${token!.result.accessToken}',
     });
- 
+
     if (response.statusCode == 200) {
-     var res= json.decode(response.body);
- 
-   var model =AllProducts.fromJson(res);    
+      var res = json.decode(response.body);
 
-    
-     return model;
+      var model = AllProducts.fromJson(res);
 
-
+      return model;
     } else {
       return json.decode(response.body);
     }
   }
-
-  
-
 
   @override
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.all(defaultPadding),
         decoration: BoxDecoration(
-       color: bgColor,
+          color: bgColor,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -210,156 +198,169 @@ var newUrl=Uri.http(BASEURL.baseurl,"/api/product/ProductList");
           ),
           Flexible(
               child: FutureBuilder<AllProducts>(
-            future:  
-                getAllproducts(),
+            future: getAllproducts(),
             builder: (context, snapShot) {
               if (snapShot.hasData) {
                 return SingleChildScrollView(
-                       scrollDirection: Axis.vertical,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                          headingRowColor:
-                            MaterialStateColor.resolveWith((states) =>  Colors.grey.withOpacity(0.5)),
-                    columns: <DataColumn>[
-                      DataColumn(
-                        label: Text(
-                          'Product Name',
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Description',
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Category',
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Product Visitors',
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Tags',
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Product Worth',
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Product Attachment',
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Product Open To',
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Bookmark',
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                      ),
-                      DataColumn(
-                        label: Text(
-                          'Actions',
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                      ),
-                    ],
-                    rows: snapShot.data!.result.map<DataRow>((e) {
-                      return DataRow(
-                        cells: <DataCell>[
-                          DataCell(Text(e.productName.toString())),
-                          DataCell(Text('${e.description}')),
-                          DataCell(Text('${e.categoryId}')),
-                          DataCell(Text('${e.productVisits}')),
-                          DataCell(Text('${e.tags}')),
-                          DataCell(Text('${e.productworth}')),
-                          DataCell(Text('${e.productAttachments.length}')),
-                          DataCell(Text(e.productOpenTo.length.toString())),
-                              DataCell(Text(bookmarkcount.toString())),
-                          DataCell(Row(
-                            children: [
-                               TextButton.icon(
-                                icon: Icon(Icons.details),
-                                label: Text(''),
-                                onPressed: () {
-                                  var model = new ProductVm(
-                                        id: e.id,
-                                        categoryId: e.categoryId,
-                                        productName: e.productName,
-                                        productdescription: e.description,
-                                        producttags: e.tags,
-                                        productWorth: e.productworth,
-                                        productOpenTo: e.productOpenTo,
-                                         attachments: e.productAttachments,
-                                        // deletedattachments: null,
-                                        // deletedopento: null
-
-                                        );
-                                         showDialog(context: context, builder:(context) =>ProductDetails(model: model, newtoken: token!.result.accessToken.toString()));
-                                  
-                                },
-                              ),
-                              TextButton.icon(
-                                icon: Icon(Icons.delete),
-                                label: Text(''),
-                                onPressed: () {
-                                  ProductController().deleteProduct(
-                                      token!.result.accessToken, e.id);
-                                },
-                              ),
-                              TextButton.icon(
-                                  icon: Icon(Icons.edit),
-                                  label: Text(''),
-                                  onPressed: () {
-                                    var model = new ProductVm(
-                                        id: e.id,
-                                        categoryId: e.categoryId,
-                                        productName: e.productName,
-                                        productdescription: e.description,
-                                        producttags: e.tags,
-                                        productWorth: e.productworth,
-                                        productOpenTo: e.productOpenTo,
-                                         attachments: e.productAttachments,
-                                        // deletedattachments: null,
-                                        // deletedopento: null
-
-                                        );
-                                  showDialog(context: context, builder:(context) =>ProductUpdate(model: model, newtoken: token!.result.accessToken.toString()));
-                                  //   Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //           builder: (context) => ProductUpdate(
-                                  //               model: model,
-                                  //               newtoken: token!
-                                  //                   .result.accessToken
-                                  //                   .toString())));
-                                  }),
-                            ],
-                          )),
+                    scrollDirection: Axis.vertical,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                        headingRowColor: MaterialStateColor.resolveWith(
+                            (states) => Colors.grey.withOpacity(0.5)),
+                        columns: <DataColumn>[
+                          DataColumn(
+                            label: Text(
+                              'Product Name',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Description',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Category',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Product Visitors',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Tags',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Product Worth',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Product Attachment',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Product Open To',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Bookmark',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'Actions',
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                          ),
                         ],
-                      );
-                    }).toList(),
-                  ),
-                ));
+                        rows: snapShot.data!.result.map<DataRow>((e) {
+                          return DataRow(
+                            cells: <DataCell>[
+                              DataCell(Text(e.productName.toString())),
+                              DataCell(Text('${e.description}')),
+                              DataCell(Text('${e.categoryId}')),
+                              DataCell(Text('${e.productVisits}')),
+                              DataCell(Text('${e.tags}')),
+                              DataCell(Text('${e.productworth}')),
+                              DataCell(Text('${e.productAttachments.length}')),
+                              DataCell(Text(e.productOpenTo.length.toString())),
+                              DataCell(Text(bookmarkcount.toString())),
+                              DataCell(Row(
+                                children: [
+                                  TextButton.icon(
+                                    icon: Icon(Icons.details),
+                                    label: Text(''),
+                                    onPressed: () {
+                                      var model = new ProductVm(
+                                        id: e.id,
+                                        categoryId: e.categoryId,
+                                        productName: e.productName,
+                                        productdescription: e.description,
+                                        producttags: e.tags,
+                                        productWorth: e.productworth,
+                                        productOpenTo: e.productOpenTo,
+                                        attachments: e.productAttachments,
+                                        // deletedattachments: null,
+                                        // deletedopento: null
+                                      );
+                                      showDialog(
+                                      context: context,
+                                      builder: (_) {
+                                        return ProductDetails(model: model, newtoken: token!
+                                                    .result.accessToken
+                                                    .toString());
+                                      
+                                        
+                                      });
+                                    },
+                                  ),
+                                  TextButton.icon(
+                                    icon: Icon(Icons.delete),
+                                    label: Text(''),
+                                    onPressed: () {
+                                      ProductController()
+                                          .deleteProduct(
+                                              token!.result.accessToken, e.id)
+                                          .whenComplete(() => setState(() {}));
+                                    },
+                                  ),
+                                  TextButton.icon(
+                                      icon: Icon(Icons.edit),
+                                      label: Text(''),
+                                      onPressed: () {
+                                        var model = new ProductVm(
+                                          id: e.id,
+                                          categoryId: e.categoryId,
+                                          productName: e.productName,
+                                          productdescription: e.description,
+                                          producttags: e.tags,
+                                          productWorth: e.productworth,
+                                          productOpenTo: e.productOpenTo,
+                                          attachments: e.productAttachments,
+                                          // deletedattachments: null,
+                                          // deletedopento: null
+                                        );
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => ProductUpdate(
+                                                model: model,
+                                                newtoken: token!
+                                                    .result.accessToken
+                                                    .toString()));
+                                        //   Navigator.push(
+                                        //       context,
+                                        //       MaterialPageRoute(
+                                        //           builder: (context) => ProductUpdate(
+                                        //               model: model,
+                                        //               newtoken: token!
+                                        //                   .result.accessToken
+                                        //                   .toString())));
+                                      }),
+                                   
+                                ],
+                              )),
+                            ],
+                          );
+                        }).toList(),
+                      ),
+                    ));
               } else {
                 return CircularProgressIndicator();
               }

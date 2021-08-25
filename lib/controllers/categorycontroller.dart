@@ -52,7 +52,7 @@ class CategoryController{
     if (response.statusCode == 200) {
 print("Category Updated!!");
 
-   Fluttertoast.showToast(msg:"Enter Valid Details Error Occured",textColor: Colors.white,backgroundColor: Colors.blueGrey,webPosition: "bottom");
+   Fluttertoast.showToast(msg:"Category Updated",textColor: Colors.white,backgroundColor: Colors.blueGrey,webPosition: "bottom");
 
        
       // Navigator.pushReplacement(
@@ -111,13 +111,13 @@ print("Category Updated!!");
     if (response.statusCode == 200) {
 print("Success Category Added!!");
 
-   Fluttertoast.showToast(msg:"Success",textColor: Colors.white,backgroundColor: Colors.blueGrey,webPosition: "bottom");
+   Fluttertoast.showToast(msg:"Success",textColor: Colors.white,backgroundColor: Colors.green,webPosition: "bottom");
 
        
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => CategoriesScreen()),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => CategoriesScreen()),
+      // );
        
       print("success");
       print(response.body);
@@ -126,7 +126,7 @@ print("Success Category Added!!");
          print("error in category Add!");
          
 
-       Fluttertoast.showToast(msg: "Enter Valid Details Error Occured",textColor: Colors.white,backgroundColor: Colors.blueGrey,webPosition: "bottom");
+       Fluttertoast.showToast(msg: "Enter Valid Details Error Occured",textColor: Colors.white,backgroundColor: Colors.red,webPosition: "bottom");
   
       print(response.body);
 

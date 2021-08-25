@@ -157,13 +157,15 @@ var newUrl=Uri.http(BASEURL.baseurl,"/api/profile/ProfileUpdate");
     if (response.statusCode == 200) {
    
  var item=json.decode(response.body);
+   
   // Iterable list = item['Result'];
   //   return  list.map((model) => User.fromJson(model))
   //     .toList();
-        Fluttertoast.showToast(msg:"Block Successfully",textColor: Colors.white,backgroundColor: Colors.blueGrey,webPosition: "bottom");
+        Fluttertoast.showToast(msg:"Block Successfully",textColor: Colors.white,backgroundColor: Colors.green,webPosition: "bottom");
+        
    
     } else {
-      Fluttertoast.showToast(msg: "Error In blocking User",textColor: Colors.white,backgroundColor: Colors.blueGrey,webPosition: "bottom");
+      Fluttertoast.showToast(msg: "Error In blocking User",textColor: Colors.white,backgroundColor: Colors.red,webPosition: "bottom");
       return json.decode(response.body);
     }
   }

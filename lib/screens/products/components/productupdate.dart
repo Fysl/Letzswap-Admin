@@ -48,7 +48,6 @@ class _ProductUpdateState extends State<ProductUpdate> {
   List<SubCategoryCheckedModel>? _opentoChecked;
   List<CheckModel>? _attachmentchecked;
   final _pickedImages = <dynamic>[];
- 
 
   String _imageInfo = '';
 
@@ -134,93 +133,98 @@ class _ProductUpdateState extends State<ProductUpdate> {
         ),
         children: [
           Card(
-            // drawer: SideMenu(),
             semanticContainer: true,
             clipBehavior: Clip.antiAliasWithSaveLayer,
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               if (Responsive.isDesktop(context))
-                // Expanded(
-                //   child: SideMenu(),
-                // ),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
                       color: bgColor,
                     ),
                     height: 800,
-                    width: 500,
+                    width: 800,
                     child: Form(
                       key: _formKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                            Wrap(
-                // spacing: 15.0,
-                children: <Widget>[
-                  AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 300),
-                    switchInCurve: Curves.easeIn,
-                    child: SizedBox(
-                      width: 500,
-                      height: 200,
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount:
-                              // ignore: unnecessary_null_comparison
-                              _pickedImages == null ? 0 : _pickedImages.length,
-                          itemBuilder: (context, index) =>
-                              _pickedImages[index]),
-                    ),
-                  ),                  
-                ],
-              ),
-              ButtonBar(alignment: MainAxisAlignment.center, children: <Widget>[
-                ElevatedButton(
-                  onPressed: _pickImage,
-                  child: const Text('Select Image'),
-                ),
-                // ElevatedButton(
-                //   onPressed: _pickVideo,
-                //   child: const Text('Select Video'),
-                // ),
-                ElevatedButton(
-                  onPressed: _pickMultiImages,
-                  child: const Text('Select Multi Images'),
-                ),
-                // ElevatedButton(
-                //   onPressed: _getImgFile,
-                //   child: const Text('Get Image File'),
-                // ),
-                // ElevatedButton(
-                //   onPressed: _getImgInfo,
-                //   child: const Text('Get Image Info'),
-                // ),
-              ]),
-    //                       Row(
-    //                         children: [
-    //                           ElevatedButton.icon(
-    //                             style: TextButton.styleFrom(
-    //                               backgroundColor: camerabtn,
-    //                               padding: EdgeInsets.symmetric(
-    //                                 horizontal: defaultPadding * 1.5,
-    //                                 vertical: defaultPadding /
-    //                                     (Responsive.isMobile(context) ? 2 : 1),
-    //                               ),
-    //                             ),
-    //                             onPressed: () {
-                              
-    // }
-
-    //                             },
-    //                             icon: Icon(Icons.camera,
-    //                             color: camerabtnlayout,
-    //                             ),
-    //                             label: Text(""),
-    //                           ),
-    //                         ],
-    //                       ),
-
+                          Row(
+                            // spacing: 15.0,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: ElevatedButton.icon(
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: camerabtn,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: defaultPadding * 1.5,
+                                      vertical: defaultPadding /
+                                          (Responsive.isMobile(context)
+                                              ? 2
+                                              : 1),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    _pickMultiImages();
+                                    setState(() {
+                                      print(_pickedImages);
+                                    });
+                                  },
+                                  icon: Icon(
+                                    Icons.camera,
+                                    color: camerabtnlayout,
+                                  ),
+                                  label: Text(""),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              SizedBox(
+                                height: 100,
+                                width: 300,
+                                child: new ListView.separated(
+                                  // itemExtent: 46.0,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount:
+                                      // ignore: unnecessary_null_comparison
+                                      _pickedImages == null
+                                          ? 0
+                                          : _pickedImages.length,
+                                  itemBuilder: (context, index) => Stack(
+                                    children: [
+                                      new Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: _pickedImages[index],
+                                      ),
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        child: FloatingActionButton(
+                                          backgroundColor: Colors.transparent,
+                                          child:
+                                              Icon(Icons.remove_circle_outline),
+                                          onPressed: () {
+                                            setState(() {
+                                              _pickedImages.removeAt(index);
+                                            });
+                                          },
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  separatorBuilder:
+                                      (BuildContext context, int index) {
+                                    return Divider();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          //Images Picker End
                           SizedBox(
                             height: 10,
                           ),
@@ -235,7 +239,7 @@ class _ProductUpdateState extends State<ProductUpdate> {
                             height: 5,
                           ),
                           SizedBox(
-                            width: 300,
+                            width: MediaQuery.of(context).size.width,
                             child: TextFormField(
                               controller: tproductname,
                               textAlign: TextAlign.left,
@@ -344,6 +348,9 @@ class _ProductUpdateState extends State<ProductUpdate> {
                                         );
                                 },
                               ),
+                              SizedBox(
+                                width: 20,
+                              ),
                               Text(
                                 "Product Worth",
                                 style: TextStyle(
@@ -397,60 +404,107 @@ class _ProductUpdateState extends State<ProductUpdate> {
                                 style: TextStyle(
                                     color: Colors.grey[600], fontSize: 16),
                               ),
-                              Flexible(
-                                child: Container(
-                                  padding: EdgeInsets.all(8.0),
-                                  width: 300,
-                                  height: 200,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: colormain)),
-                                  child: ListView.builder(
-                                      itemCount: subcatlist!.length,
-                                      itemBuilder:
-                                          (BuildContext ctxt, int index) {
-                                        return CheckboxListTile(
-                                          activeColor: secondaryColor,
-                                          controlAffinity:
-                                              ListTileControlAffinity.leading,
-                                          // selectedTileColor:colormain.withOpacity(0.5) ,
-                                          dense: true,
-                                          //font change
-                                          title: new Text(
-                                            subcatlist![index].categoryname,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                                letterSpacing: 0.5),
-                                          ),
-                                          value: subcatlist![index].value,
-                                          onChanged: (val) {
-                                            setState(() {
-                                              subcatlist![index].value = val!;
-
-                                              if (val == true) {
-                                                newopenTo!.add(
-                                                  {
-                                                    "categoryid":
-                                                        subcatlist![index]
-                                                            .categoryid,
-                                                    "OpenTo": subcatlist![index]
-                                                        .opentoId
-                                                  },
-                                                );
-                                              } else {
-                                                newopenTo!.removeWhere((item) =>
-                                                    item["categoryid"] ==
-                                                    subcatlist![index]
-                                                        .categoryid);
-                                              }
-
-                                              print(newopenTo!.toList());
-                                            });
-                                          },
-                                        );
-                                      }),
+                              Container(
+                                width: 300,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                        color: Colors.grey,
+                                        width: 1,
+                                        style: BorderStyle.solid)),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    hint: Text(
+                                      '',
+                                      style: TextStyle(
+                                          color: Colors.grey[600],
+                                          fontSize: 13),
+                                    ),
+                                    icon: Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Colors.black,
+                                    ),
+                                    iconSize: 20,
+                                    items: subcatlist!
+                                        .map<DropdownMenuItem<String>>((item) {
+                                      return DropdownMenuItem<String>(
+                                        value: item.categoryid.toString(),
+                                        child: Row(
+                                          children: [
+                                            Checkbox(
+                                                value: item.value,
+                                                onChanged: (val) {
+                                                  setState(() {
+                                                    item.value = val!;
+                                                  });
+                                                }),
+                                            Text(
+                                              item.categoryname,
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      setState(() {});
+                                    },
+                                  ),
                                 ),
                               ),
+                              // Flexible(
+                              //   child: Container(
+                              //     padding: EdgeInsets.all(8.0),
+                              //     width: 300,
+                              //     height: 200,
+                              //     decoration: BoxDecoration(
+                              //         border: Border.all(color: colormain)),
+                              //     child: ListView.builder(
+                              //         itemCount: subcatlist!.length,
+                              //         itemBuilder:
+                              //             (BuildContext ctxt, int index) {
+                              //           return CheckboxListTile(
+                              //             activeColor: secondaryColor,
+                              //             controlAffinity:
+                              //                 ListTileControlAffinity.leading,
+                              //             // selectedTileColor:colormain.withOpacity(0.5) ,
+                              //             dense: true,
+                              //             //font change
+                              //             title: new Text(
+                              //               subcatlist![index].categoryname,
+                              //               style: TextStyle(
+                              //                   fontSize: 14,
+                              //                   fontWeight: FontWeight.w600,
+                              //                   letterSpacing: 0.5),
+                              //             ),
+                              //             value: subcatlist![index].value,
+                              //             onChanged: (val) {
+                              //               setState(() {
+                              //                 subcatlist![index].value = val!;
+
+                              //                 if (val == true) {
+                              //                   newopenTo!.add(
+                              //                     {
+                              //                       "categoryid":
+                              //                           subcatlist![index]
+                              //                               .categoryid,
+                              //                       "OpenTo": subcatlist![index]
+                              //                           .opentoId
+                              //                     },
+                              //                   );
+                              //                 } else {
+                              //                   newopenTo!.removeWhere((item) =>
+                              //                       item["categoryid"] ==
+                              //                       subcatlist![index]
+                              //                           .categoryid);
+                              //                 }
+
+                              //                 print(newopenTo!.toList());
+                              //               });
+                              //             },
+                              //           );
+                              //         }),
+                              //   ),
+                              // ),
                               SizedBox(
                                 width: 10,
                               ),
@@ -682,6 +736,7 @@ class _ProductUpdateState extends State<ProductUpdate> {
             }));
     return _getsubfuture;
   }
+
   Future<void> _pickImage() async {
     Object? fromPicker =
         await ImagePickerWeb.getImage(outputType: ImageType.widget);
@@ -696,9 +751,9 @@ class _ProductUpdateState extends State<ProductUpdate> {
 
   Future<void> _getImgFile() async {
     Object? infos = await ImagePickerWeb.getImage(outputType: ImageType.file);
-    setState(() => _imageInfo =
-        'Name: ${infos}\nRelative Path: ${infos!}');
+    setState(() => _imageInfo = 'Name: ${infos}\nRelative Path: ${infos!}');
   }
+
   Future<void> _pickMultiImages() async {
     List? images =
         await ImagePickerWeb.getMultiImages(outputType: ImageType.widget);
@@ -707,7 +762,6 @@ class _ProductUpdateState extends State<ProductUpdate> {
       if (images != null) _pickedImages.addAll(images);
     });
   }
-   
 }
 
 
@@ -751,3 +805,25 @@ class _ProductUpdateState extends State<ProductUpdate> {
                           // Flexible(
                           //   child: DroppedFileWidget(file: file),
                           // ),
+
+  // ButtonBar(
+                          //     alignment: MainAxisAlignment.center,
+                          //     children: <Widget>[
+                          //       ElevatedButton(
+                          //         onPressed: _pickImage,
+                          //         child: const Text('Select Image'),
+                          //       ),
+
+                          //       ElevatedButton(
+                          //         onPressed: _pickMultiImages,
+                          //         child: const Text('Select Multi Images'),
+                          //       ),
+                          //       // ElevatedButton(
+                          //       //   onPressed: _getImgFile,
+                          //       //   child: const Text('Get Image File'),
+                          //       // ),
+                          //       // ElevatedButton(
+                          //       //   onPressed: _getImgInfo,
+                          //       //   child: const Text('Get Image Info'),
+                          //       // ),
+                          //     ]),

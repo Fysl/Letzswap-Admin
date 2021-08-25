@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_toggle_tab/flutter_toggle_tab.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:letzswap_dashboard/constants.dart';
 import 'package:letzswap_dashboard/controllers/categoryController.dart';
@@ -23,7 +22,10 @@ class _CreateMainCategoryState extends State<CreateMainCategory> {
   List<String> imagesbs4 = [];
   List<int> check = [];
   String? token;
-
+  bool? dropflag = false;
+  int?cattype;
+  String? selectedvalue;
+  String? selectedText;
   final _formKey = GlobalKey<FormState>();
   String? newtoken;
   final focustext = FocusNode();
@@ -149,46 +151,13 @@ class _CreateMainCategoryState extends State<CreateMainCategory> {
 
   @override
   Widget build(BuildContext mainContext) {
-    // return Scaffold(
-    //   drawer: SideMenu(),
-    //   body: SafeArea(
-    //     child: Row(
-    //           crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //          if (Responsive.isDesktop(context))
-    //           Expanded(
-    //             // default flex = 1
-    //             // and it takes 1/6 part of the screen
-    //             child: SideMenu(),
-    //           ),
-    //         Expanded(
-    //            flex: 5,
-    //           child:Align(
-    //             alignment: Alignment.center,
-    //             child: Container(
-    //                   child: Form(
-    //                     key: _formKey,
-    //                     child: Column(
-    //                         mainAxisAlignment: MainAxisAlignment.start,
-    //                         crossAxisAlignment: CrossAxisAlignment.start,
-
-    //                       ),
-    //                   ),
-
-    //                 ),
-    //           ),
-    //         ),
-    //       ]),
-    //   ),
-    // );
-
     return SimpleDialog(
         backgroundColor: bgColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Create Main Category",
+              "Create  Category",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 16,
@@ -200,147 +169,26 @@ class _CreateMainCategoryState extends State<CreateMainCategory> {
             ),
           ],
         ),
-        // drawer: SideMenu(),
-        // body: SafeArea(
-        children: <Widget>[
-          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            if (Responsive.isDesktop(context))
-              Expanded(
-                // flex: 5,
-               
-                  child: Container(
+        children:[
+          Padding(
+           padding: EdgeInsets.symmetric(horizontal: 100,vertical: 0),
+            // semanticContainer: true,
+            // clipBehavior: Clip.antiAliasWithSaveLayer,
+            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              if (Responsive.isDesktop(context))
+                Expanded(             
+                  child: Container(                  
+                    height: 400,
+                    width: 400,
+                    decoration: BoxDecoration(
+                      color: bgColor,
+                    ),
                     child: Form(
                       key: _formKey,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Padding(
-                          //   padding: EdgeInsets.only(left: 20, top: 15),
-                          //   child: FlutterToggleTab(
-                          //     selectedBackgroundColors: [Color(0xFFFF574E)],
-                          //     //unSelectedBackgroundColors: [Colors.],
-                          //     width: 50,
-                          //     height: 55,
-                          //     borderRadius: 35,
-                          //     selectedIndex: 1,
-                          //     selectedTextStyle: TextStyle(
-                          //         color: Colors.white,
-                          //         fontSize: 15,
-                          //         fontWeight: FontWeight.bold),
-                          //     unSelectedTextStyle: TextStyle(
-                          //         color: Colors.grey[800],
-                          //         fontSize: 15,
-                          //         fontWeight: FontWeight.bold),
-                          //     labels: ["Main Category", "Sub Category"],
-                          //     // icons: [Icons.person, Icons.pregnant_woman],
-                          //     selectedLabelIndex: (index) {
-                          //       print("Selected Index $index");
-                          //       if (index == 1) {
-
-                          //          return SizedBox(height: 20,child: Column(children: [
-
-                          //          ],),)
-                          //       } else if (index == 0) {
-
-                          //       }
-                          //     },
-                          //   ),
-                          // ),
-
-                          // ElevatedButton.icon(
-                          //   style: TextButton.styleFrom(
-                          //     backgroundColor: camerabtn,
-                          //     padding: EdgeInsets.symmetric(
-                          //       horizontal: defaultPadding * 1.5,
-                          //       vertical: defaultPadding /
-                          //           (Responsive.isMobile(context) ? 2 : 1),
-                          //     ),
-                          //   ),
-                          //   icon: Icon(Icons.category),
-                          //   onPressed: () {},
-                          //   label: Text("Sub Categories"),
-                          // ),
-
-                          //changes here
-
-                          // Row(
-                          //   children: [
-
-                          //   ],
-                          // ),
-                          // SizedBox(
-                          //   width: MediaQuery.of(context).size.width * 0.7,
-                          //   height: 100,
-                          //   child: ListView.builder(
-                          //       scrollDirection: Axis.horizontal,
-                          //       itemCount: multipleimages.length,
-                          //       itemBuilder: (context, index) {
-                          //         return Row(
-                          //           children: [
-                          //             Stack(children: [
-                          //               GestureDetector(
-                          //                 onTap: () {
-                          //                   setState(() {
-                          //                     multipleimages
-                          //                         .removeAt(index);
-                          //                   });
-                          //                 },
-                          //                 child: Container(
-                          //                     decoration: BoxDecoration(
-                          //                         borderRadius:
-                          //                             BorderRadius.circular(
-                          //                                 350.0)),
-                          //                     width: MediaQuery.of(context)
-                          //                             .size
-                          //                             .width *
-                          //                         0.24,
-                          //                     height: 80,
-                          //                     child: Image.file(
-                          //                         multipleimages[index])),
-                          //               ),
-                          //               GestureDetector(
-                          //                 onTap: () {
-                          //                   setState(() {
-                          //                     multipleimages
-                          //                         .removeAt(index);
-                          //                   });
-                          //                 },
-                          //                 child: Container(
-                          //                   child: Padding(
-                          //                       padding: EdgeInsets.only(
-                          //                           left: 47.0, top: 12.0),
-                          //                       child: Icon(Icons.close,
-                          //                           color:
-                          //                               Colors.red[200])),
-                          //                 ),
-                          //               ),
-                          //               //),
-                          //             ]),
-                          //           ],
-                          //         );
-                          //       }),
-                          // ),
-                          // ElevatedButton.icon(
-                          //   style: TextButton.styleFrom(
-                          //     backgroundColor: camerabtn,
-                          //     padding: EdgeInsets.symmetric(
-                          //       horizontal: defaultPadding * 1.5,
-                          //       vertical: defaultPadding /
-                          //           (Responsive.isMobile(context)
-                          //               ? 2
-                          //               : 1),
-                          //     ),
-                          //   ),
-                          //   onPressed: () {
-                          //     selectImage(context);
-                          //   },
-                          //   icon: Icon(
-                          //     Icons.camera,
-                          //     color: camerabtnlayout,
-                          //   ),
-                          //   label: Text(""),
-                          // ),
                           Row(
                             children: [
                               ElevatedButton.icon(
@@ -359,12 +207,12 @@ class _CreateMainCategoryState extends State<CreateMainCategory> {
                                 icon: Icon(Icons.camera),
                                 label: Text(""),
                               ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.2,
-                              ),
+                              // SizedBox(
+                              //   width: MediaQuery.of(context).size.width * 0.2,
+                              // ),
                             ],
                           ),
-
+                         SizedBox(height: 20,),
                           Text(
                             "Category Name",
                             style: TextStyle(
@@ -373,7 +221,7 @@ class _CreateMainCategoryState extends State<CreateMainCategory> {
                                 fontWeight: FontWeight.normal),
                           ),
                           SizedBox(
-                            height: 8,
+                            height: 10,
                           ),
                           SizedBox(
                             width: 400,
@@ -386,8 +234,8 @@ class _CreateMainCategoryState extends State<CreateMainCategory> {
                                 contentPadding:
                                     EdgeInsets.symmetric(horizontal: 10.0),
                                 //labelText: 'Email Address',
-                                labelStyle: TextStyle(
-                                    fontSize: 55, color: Colors.black),
+                                labelStyle:
+                                    TextStyle(fontSize: 55, color: Colors.black),
                                 focusedBorder: OutlineInputBorder(
                                   //borderRadius: BorderRadius.circular(25.0),
                                   borderSide: BorderSide(
@@ -426,8 +274,8 @@ class _CreateMainCategoryState extends State<CreateMainCategory> {
                                 contentPadding:
                                     EdgeInsets.symmetric(horizontal: 10.0),
                                 //labelText: 'Email Address',
-                                labelStyle: TextStyle(
-                                    fontSize: 55, color: Colors.black),
+                                labelStyle:
+                                    TextStyle(fontSize: 55, color: Colors.black),
                                 focusedBorder: OutlineInputBorder(
                                   //borderRadius: BorderRadius.circular(25.0),
                                   borderSide: BorderSide(
@@ -447,19 +295,105 @@ class _CreateMainCategoryState extends State<CreateMainCategory> {
                           ),
 
                           SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Text(
+                                "Is Subcategory:",
+                                style: TextStyle(
+                                    fontSize: 13.0, color: Colors.grey[800]),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Checkbox(
+                                  value: dropflag,
+                                  onChanged: (val) {
+                                    setState(() {
+                                      dropflag = val;
+                                    });
+                                  }),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              if (dropflag == true) ...[
+                                FutureBuilder(
+                                  future:
+                                      CategoryController().getcatById(newtoken!),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snapshot) {
+                                    return snapshot.hasData
+                                        ? Container(
+                                            child: DropdownButton<String>(
+                                              hint: Text(
+                                                selectedText ??
+                                                    'Make a selection',
+                                                style: TextStyle(
+                                                    color: Colors.grey[600],
+                                                    fontSize: 13),
+                                              ),
+                                              items: snapshot.data!.result
+                                                  .map<DropdownMenuItem<String>>(
+                                                      (item) {
+                                                return DropdownMenuItem<String>(
+                                                  value:
+                                                      item.categoryid.toString(),
+                                                  child: Text(
+                                                    item.categoryname,
+                                                  ),
+                                                );
+                                              }).toList(),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  selectedvalue = value;
+                                                  var record = snapshot
+                                                      .data!.result
+                                                      .where((item) =>
+                                                          item.categoryid ==
+                                                          int.parse(value!))
+                                                      .toList();
+                                                  selectedText = record[0]
+                                                      .categoryname
+                                                      .toString();
+                                                });
+                                              },
+                                            ),
+                                          )
+                                        : Container(
+                                            child: Center(
+                                              child: Text('Loading...'),
+                                            ),
+                                          );
+                                  },
+                                ),
+                              ] else
+                                ...[],
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           ////Button Continue
                           SizedBox(
                             height: 40,
                             width: 400,
                             child: ElevatedButton(
                               onPressed: () async {
+                                
                                 if (_formKey.currentState!.validate()) {
-                                  var cattype = 0;
+                                  if(dropflag==false)
+                                  {
+                                    cattype = 0;
+                                  }
+                                  else
+                                  {
+                                    cattype=int.parse(selectedvalue!);
+                                  }
+                                  
                                   CategoryController().postmaincategory(
                                     mainContext,
                                     tcategoryname.text.trim(),
                                     tdescription.text.trim(),
-                                    cattype,
+                                    cattype!,
                                     newtoken!,
                                   );
                                 }
@@ -474,8 +408,8 @@ class _CreateMainCategoryState extends State<CreateMainCategory> {
                     ),
                   ),
                 ),
-         
-          ]),
+            ]),
+          ),
         ]);
   }
 
